@@ -1,0 +1,11 @@
+.navbarContainer{
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    transition: .32s ease-in-out;
+    background-color: var(--primary-color);
+    border-bottom-right-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+}
