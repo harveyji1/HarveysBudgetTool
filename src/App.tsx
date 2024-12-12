@@ -5,9 +5,13 @@ import './App.css'
 
 function App() {
   // const [count, setCount] = useState(0)
-
+  const items = ["Home","Product", "Service"];
   return (
-    <NavBar/>
+    <div>
+      <NavBar 
+      brandName="My Brand" 
+      navItems={items}/>
+    </div>
     // <Calculator/>
   )
 }
