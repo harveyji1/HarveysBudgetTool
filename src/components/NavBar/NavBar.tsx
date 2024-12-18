@@ -12,11 +12,11 @@ interface NavBarProps {
   
     return (
       <nav className="navbar navbar-expand-md navbar-light bg-white shadow">
-        <div className="container-fluid">
+        <div className="navbar-elements-container">
           <a className="navbar-brand" href="#">
             <span className="fw-bolder fs-4">{brandName}</span>
           </a>
-          <button
+          {/* <button
             className="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
@@ -26,12 +26,12 @@ interface NavBarProps {
             aria-label="Toggle navigation"
           >
             <span className="navbar-toggler-icon" />
-          </button>
+          </button> */}
           <div
             className="collapse
            navbar-collapse"
           id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-md-1">
+            <div className="navbar-nav">
               {navItems.map((items, index) => (
                 <li
                   key={items}
@@ -50,8 +50,8 @@ interface NavBarProps {
                   </a>
                 </li>
               ))}
-            </ul>
-            <form className="d-flex me-3">
+            </div>
+            {/* <form className="d-flex me-3">
               <input
                 className="form-control me-2"
                 type="search"
@@ -61,7 +61,7 @@ interface NavBarProps {
               <button className="btn btn-outline-success" type="submit">
                 Search
               </button>
-            </form>
+            </form> */}
           </div>
         </div>
       </nav>

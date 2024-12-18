@@ -5,7 +5,7 @@ import './App.css'
 
 function App() {
   // const [count, setCount] = useState(0)
-  const items = ["Home","Product", "Service"];
+  const items = ["Calculator","AI Help", "Contact"];
   return (
     <div>
       <NavBar 
