@@ -1,19 +1,45 @@
-.navbar-nav .nav-item .nav-link:hover {
-    color: black; /* Change to your desired text color on hover */
-    background-color: #f0f0f0; /* Change to your desired background color on hover */
-    /* Add any other styling you want for the hover effect */
-}
-
-/* .navbarContainer{
+.navbar{
     position: fixed;
     width: 100%;
     top: 0;
     left: 0;
     z-index: 9999;
     transition: .32s ease-in-out;
-    background-color: var(--primary-color);
+    background-color: var(--dark-color);
+    color: var(--secondary-color) !important;
     border-bottom-right-radius: 1rem;
     border-bottom-left-radius: 1rem;
+}
+
+.navbar-elements-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.nav-item {
+    list-style: none !important;
+}
+
+.nav-link{
+    color: var(--bright-color) !important;
+}
+
+.navbar-brand{
+    margin: 2rem;
+    color: var(--secondary-color) !important;
+
+}
+
+.navbar-nav{
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+}
+
+/* .navbarContainer{
 
 }
 
