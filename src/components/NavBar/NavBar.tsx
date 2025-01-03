@@ -2,20 +2,16 @@ import { useState } from "react";
 import "./NavBar.css";
 
 interface NavBarProps {
-    brandName: string;
     navItems: string[];
   }
   
-  function NavBar({ brandName, navItems }: NavBarProps) {
+  function NavBar({ navItems }: NavBarProps) {
   
     const [selectedIndex, setSelectedIndex] = useState(-1);
   
     return (
       <nav className="navbar navbar-expand-md navbar-light bg-white shadow">
         <div className="navbar-elements-container">
-          <a className="navbar-brand" href="#">
-            <span className="fw-bolder fs-4">{brandName}</span>
-          </a>
           {/* <button
             className="navbar-toggler"
             type="button"
