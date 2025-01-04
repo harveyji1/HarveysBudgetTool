@@ -1,6 +1,6 @@
 // import { useState } from 'react'
 import NavBar from './components/NavBar/NavBar';
-// import Calculator from './components/Calculator/Calculator';
+import Calculator from './components/Calculator/Calculator';
 import './App.css'
 
 function App() {
@@ -10,8 +10,9 @@ function App() {
     <div>
       <NavBar
         navItems={items}/>
+      <Calculator/>
     </div>
-    // <Calculator/>
+
   )
 }
 
