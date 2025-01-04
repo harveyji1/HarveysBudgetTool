@@ -1,0 +1,9 @@
+.calculatorForm{
+    background-color: var(--primary-color);
+    padding: 2rem;
+    border-radius: .5rem;
+}
+
+.inputs{
+    margin-bottom: 1rem;
+}
