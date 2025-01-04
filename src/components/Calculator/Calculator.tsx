@@ -5,10 +5,19 @@ import Form from 'react-bootstrap/Form';
 function Calculator() {
     return(
         <Form className='calculatorForm'>
-        <Form.Group className = "inputs">
-          <Form.Label>Income: </Form.Label>
-          <Form.Control />
-        </Form.Group>
+          <div className='calculatorInputs'>
+            <Form.Group className = "incomeInputs">
+              <Form.Label>Income: </Form.Label>
+              <Form.Control />
+            </Form.Group>
+            <h2> Fixed Expenses</h2>
+            <Form.Group className = "fixedExpenses">
+              <Form.Label>Rent/Housing: </Form.Label>
+              <Form.Control />
+              <Form.Label>Other Fixed Expenses: </Form.Label>
+              <Form.Control />
+            </Form.Group>
+          </div>
         {/* <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
           <Form.Control type="password" placeholder="Password" />
@@ -16,8 +25,8 @@ function Calculator() {
         <Form.Group className="mb-3" controlId="formBasicCheckbox">
           <Form.Check type="checkbox" label="Check me out" />
         </Form.Group> */}
-        <Button variant="primary" type="submit">
-          Submit
+        <Button type="submit">
+          Calculate
         </Button>
       </Form>
     )

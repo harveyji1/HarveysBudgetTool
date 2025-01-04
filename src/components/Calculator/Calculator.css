@@ -3,7 +3,15 @@
     padding: 2rem;
     border-radius: .5rem;
 }
+.calculatorInputs{
+    margin: 1rem;
+}
 
-.inputs{
+.incomeInputs{
     margin-bottom: 1rem;
+}
+
+.fixedExpenses{
+    display: flex;
+    flex-direction: column;
 }
