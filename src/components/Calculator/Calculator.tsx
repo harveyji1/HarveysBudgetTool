@@ -4,18 +4,20 @@ import Form from 'react-bootstrap/Form';
 
 function Calculator() {
     return(
-        <Form className='calculatorForm'>
+
+        <Form className='calculatorForm'> 
           <div className='calculatorInputs'>
+            <h2>Income</h2>
             <Form.Group className = "incomeInputs">
               <Form.Label>Income: </Form.Label>
-              <Form.Control />
+              <Form.Control type='number'/>
             </Form.Group>
-            <h2> Fixed Expenses</h2>
+            <h2>Fixed Expenses</h2>
             <Form.Group className = "fixedExpenses">
               <Form.Label>Rent/Housing: </Form.Label>
-              <Form.Control />
+              <Form.Control type='number'/>
               <Form.Label>Other Fixed Expenses: </Form.Label>
-              <Form.Control />
+              <Form.Control type='number'/>
             </Form.Group>
           </div>
         {/* <Form.Group className="mb-3" controlId="formBasicPassword">
