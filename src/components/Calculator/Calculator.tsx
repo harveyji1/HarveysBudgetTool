@@ -7,16 +7,27 @@ function Calculator() {
 
         <Form className='calculatorForm'> 
           <div className='calculatorInputs'>
-            <h2>Income</h2>
+            <h2 className='categoryHeader'>Income</h2>
             <Form.Group className = "incomeInputs">
-              <Form.Label>Income: </Form.Label>
+              <Form.Label>Income (Total After Tax): </Form.Label>
               <Form.Control type='number'/>
             </Form.Group>
-            <h2>Fixed Expenses</h2>
+            <h2 className='categoryHeader'>Fixed Expenses</h2>
+            <h4 className='categoryDesc'>Expenses that can not or will not change</h4>
             <Form.Group className = "fixedExpenses">
-              <Form.Label>Rent/Housing: </Form.Label>
+              <Form.Label>Rent/Mortgage: </Form.Label>
               <Form.Control type='number'/>
-              <Form.Label>Other Fixed Expenses: </Form.Label>
+              <Form.Label>Car Payments: </Form.Label>
+              <Form.Control type='number'/>
+              <Form.Label>Debt Payments: </Form.Label>
+              <Form.Control type='number'/>
+              <Form.Label>Insurance: </Form.Label>
+              <Form.Control type='number'/>
+              <Form.Label>Investments: </Form.Label>
+              <Form.Control type='number'/>
+              <Form.Label>Tuiton: </Form.Label>
+              <Form.Control type='number'/>
+              <Form.Label>Emergency Funds: </Form.Label>
               <Form.Control type='number'/>
             </Form.Group>
           </div>

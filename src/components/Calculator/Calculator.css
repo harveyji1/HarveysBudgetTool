@@ -8,10 +8,26 @@
 }
 
 .incomeInputs{
+    display: grid;
+    grid-template-columns: 12rem 12rem;
     margin-bottom: 1rem;
 }
 
 .fixedExpenses{
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 12rem 12rem;
+    margin-bottom: 1rem;
+}
+
+.form-control{
+    margin-bottom: .5rem;
+}
+
+
+.categoryHeader{
+margin-bottom: .75rem;
+}
+
+.categoryDesc{
+    margin-bottom: .5rem;
 }
