@@ -11,9 +11,6 @@ interface NavBarProps {
   
     return (
       <nav className="navbar navbar-expand-md navbar-light bg-white shadow">
-        <div>
-          <h4>THIS IS A WORK IN PROGRESS, SOME FUNCTIONS MAY NOT OPERATE CORRECTLY</h4>
-        </div>
         <div className="navbar-elements-container">
           {/* <button
             className="navbar-toggler"
