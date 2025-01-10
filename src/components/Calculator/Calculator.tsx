@@ -2,28 +2,29 @@ import './Calculator.css';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
+import { calculateBudget, Category } from '../../utilities/calculateBudget';
 
 function Calculator() {
   // Define categories and fields as data
-  const [categories, setCategories] = useState([
+  const [categories, setCategories] = useState<Category[]>([
     {
       name: 'Income',
       description: '',
       fields: [
-        { label: 'Income (Total After Tax): ', value: '' },
+        { id: 'incomeTotal', label: 'Income (Total After Tax): ', value: '' },
       ],
     },
     {
       name: 'Fixed Expenses',
       description: 'Expenses that can not or will not change',
       fields: [
-        { label: 'Rent/Mortgage: ', value: '' },
-        { label: 'Car Payments: ', value: '' },
-        { label: 'Debt Payments: ', value: '' },
-        { label: 'Insurance: ', value: '' },
-        { label: 'Investments: ', value: '' },
-        { label: 'Tuition: ', value: '' },
-        { label: 'Emergency Funds: ', value: '' },
+        { id: 'rent', label: 'Rent/Mortgage: ', value: '' },
+        { id: 'carPayments', label: 'Car Payments: ', value: '' },
+        { id: 'debtPayments', label: 'Debt Payments: ', value: '' },
+        { id: 'insurance', label: 'Insurance: ', value: '' },
+        { id: 'investments', label: 'Investments: ', value: '' },
+        { id: 'tuition', label: 'Tuition: ', value: '' },
+        { id: 'emergencyFunds', label: 'Emergency Funds: ', value: '' },
       ],
     },
     {
@@ -37,6 +38,12 @@ function Calculator() {
     const updatedCategories = [...categories];
     updatedCategories[categoryIndex].fields[fieldIndex].value = value;
     setCategories(updatedCategories);
+  };
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    const results = calculateBudget(categories);
+    console.log('Calculation Results:', results);
   };
 
   return (
@@ -61,7 +68,7 @@ function Calculator() {
           </div>
         ))}
       </div>
-      <Button type="submit">Calculate</Button>
+      <Button onClick={handleSubmit}>Calculate</Button>
     </Form>
   );
 }
