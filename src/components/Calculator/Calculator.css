@@ -2,6 +2,7 @@
     background-color: var(--primary-color);
     padding: 2rem;
     border-radius: .5rem;
+    margin-top: 2.5rem;
 }
 .calculatorInputs{
     margin: 1rem;
