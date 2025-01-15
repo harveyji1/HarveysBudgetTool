@@ -1,3 +1,4 @@
+import './AddCategory.css';
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -19,13 +20,15 @@ function AddCategory({ onAddCategory }: AddCategoryProps) {
   return (
     <div className="addCategory">
       <Form.Group>
-        <Form.Label>Add a Fixed Expense Category</Form.Label>
+        <div className='formField'>
+        <Form.Label>Add a Category: </Form.Label>
         <Form.Control
           type="text"
           value={newCategoryName}
           onChange={(e) => setNewCategoryName(e.target.value)}
           placeholder="Enter category name"
         />
+        </div>
       </Form.Group>
       <Button onClick={handleAdd} className="mt-2">
         Add Category
