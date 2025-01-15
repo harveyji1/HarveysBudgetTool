@@ -39,6 +39,10 @@
     gap: 1.5rem;
 }
 
+.workInProgressMessage{
+    color: red;
+}
+
 /* .navbarContainer{
 
 }
