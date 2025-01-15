@@ -7,25 +7,25 @@ import AddCategory from './AddCategory';
 
 function Calculator() {
   // Define categories and fields as data
-  const [categories, setCategories] = useState<Category[]>([
+  const [categories, setCategories] = useState([
     {
       name: 'Income',
       description: '',
       fields: [
-        { id: 'incomeTotal', label: 'Income (Total After Tax): ', value: '' },
+        { label: 'Income (Total After Tax): ', value: '' },
       ],
     },
     {
       name: 'Fixed Expenses',
       description: 'Expenses that can not or will not change',
       fields: [
-        { id: 'rent', label: 'Rent/Mortgage: ', value: '' },
-        { id: 'carPayments', label: 'Car Payments: ', value: '' },
-        { id: 'debtPayments', label: 'Debt Payments: ', value: '' },
-        { id: 'insurance', label: 'Insurance: ', value: '' },
-        { id: 'investments', label: 'Investments: ', value: '' },
-        { id: 'tuition', label: 'Tuition: ', value: '' },
-        { id: 'emergencyFunds', label: 'Emergency Funds: ', value: '' },
+        { label: 'Rent/Mortgage: ', value: '' },
+        { label: 'Car Payments: ', value: '' },
+        { label: 'Debt Payments: ', value: '' },
+        { label: 'Insurance: ', value: '' },
+        { label: 'Investments: ', value: '' },
+        { label: 'Tuition: ', value: '' },
+        { label: 'Emergency Funds: ', value: '' },
       ],
     },
     {
@@ -49,12 +49,6 @@ function Calculator() {
     const updatedCategories = [...categories];
     updatedCategories[categoryIndex].fields[fieldIndex].value = value;
     setCategories(updatedCategories);
-  };
-
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    const results = calculateBudget(categories);
-    console.log('Calculation Results:', results);
   };
 
   return (
@@ -82,7 +76,7 @@ function Calculator() {
           </div>
         ))}
       </div>
-      <Button onClick={handleSubmit}>Calculate</Button>
+      <Button type="submit">Calculate</Button>
     </Form>
   );
 }
