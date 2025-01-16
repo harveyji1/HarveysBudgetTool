@@ -24,3 +24,5 @@ export interface CategoryField {
       remainingBudget,
     };
   }
+
+  export default calculateBudget;
