@@ -1,5 +1,6 @@
 {
-  "name": "vite-project",
+  "name": "harveys-budget-tool",
+  "homepage": "https://harveyji1.github.io/HarveysBudgetTool",
   "private": true,
   "version": "0.0.0",
   "type": "module",
