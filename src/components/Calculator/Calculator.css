@@ -12,6 +12,7 @@
     display: grid;
     grid-template-columns: 12rem 12rem;
     margin-bottom: 1rem;
+    justify-content: center;
 }
 
 .fixedExpenses{
