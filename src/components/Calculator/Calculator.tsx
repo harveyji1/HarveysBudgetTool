@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
 import { calculateBudget, Category, CategoryField } from '../../utilities/calculateBudget.ts';
 import AddCategory from './AddCategory'; 
+import DeleteCategory from './DeleteCategory.tsx';
 
 function Calculator() {
   // Define categories and fields as data
@@ -35,7 +36,7 @@ function Calculator() {
     },
   ]);
 
-  const handleAddFixedCategory = (newCategoryName: string) => {
+  const handleAddCategory = (newCategoryName: string) => {
     const nonFixedExpensesIndex = categories.findIndex((cat) => cat.name === 'Non-Fixed Expenses');
     if (nonFixedExpensesIndex !== -1) {
       const updatedCategories = [...categories];
@@ -67,6 +68,7 @@ function Calculator() {
             <Form.Group className='inputs'>
               {category.fields.map((field: CategoryField, fieldIndex: number) => (
                 <div key={fieldIndex} className='formField'>
+                  <DeleteCategory/>
                   <Form.Label>{field.label}</Form.Label>
                   <Form.Control
                     type='number'
@@ -77,7 +79,7 @@ function Calculator() {
               ))}
             </Form.Group>
             {category.name === 'Non-Fixed Expenses' && (
-              <AddCategory onAddCategory={handleAddFixedCategory} />
+              <AddCategory onAddCategory={handleAddCategory} />
             )}
           </div>
         ))}
