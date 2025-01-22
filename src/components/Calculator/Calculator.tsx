@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
 import { calculateBudget, Category, CategoryField } from '../../utilities/calculateBudget.ts';
 import AddCategory from './AddCategory'; 
-import DeleteCategory from './DeleteCategory.tsx';
+import { TiDelete } from 'react-icons/ti';
 
 function Calculator() {
   // Define categories and fields as data
@@ -68,8 +68,7 @@ function Calculator() {
             <Form.Group className='inputs'>
               {category.fields.map((field: CategoryField, fieldIndex: number) => (
                 <div key={fieldIndex} className='formField'>
-                  <DeleteCategory/>
-                  <Form.Label>{field.label}</Form.Label>
+                  <Form.Label className='categoryLabel'><TiDelete/>{field.label}</Form.Label>
                   <Form.Control
                     type='number'
                     value={field.value}

@@ -37,3 +37,9 @@ margin-bottom: .75rem;
 .form-label{
     text-align: left;
 }
+
+.categoryLabel{
+    display: flex;
+    align-items: center;
+    gap: .25rem;
+}
