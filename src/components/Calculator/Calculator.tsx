@@ -2,9 +2,10 @@ import './Calculator.css';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
-import { calculateBudget, Category, CategoryField } from '../../utilities/calculateBudget.ts';
+import { calculateBudget} from '../../utilities/calculateBudget.ts';
 import AddCategory from './AddCategory'; 
 import { TiDelete } from 'react-icons/ti';
+import { Category, CategoryField } from '../../models/Category.ts';
 
 function Calculator() {
   // Define categories and fields as data
