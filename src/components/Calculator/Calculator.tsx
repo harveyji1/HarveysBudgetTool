@@ -14,7 +14,7 @@ function Calculator() {
       name: 'Income',
       description: '',
       fields: [
-        { id: 'incomeTotal', label: 'Income (Total After Tax): ', value: '' },
+        { id: 'incomeTotal', label: 'Income: ', value: '' },
       ],
     },
     {
@@ -64,8 +64,8 @@ function Calculator() {
       <div className='calculatorInputs'>
         {categories.map((category, categoryIndex) => (
           <div key={categoryIndex} className='category'>
-            <h2 className='categoryHeader'>{category.name}</h2>
-            {category.description && <h4 className='categoryDesc'>{category.description}</h4>}
+            <h3 className='categoryHeader'>{category.name}</h3>
+            {category.description && <h6 className='categoryDesc'>{category.description}</h6>}
             <Form.Group className='inputs'>
               {category.fields.map((field: CategoryField, fieldIndex: number) => (
                 <div key={fieldIndex} className='formField'>

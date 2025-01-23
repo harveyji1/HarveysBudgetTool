@@ -1,14 +1,15 @@
 .navbar{
-    position: fixed;
+    position: fixed !important;
     width: 100%;
     top: 0;
     left: 0;
     z-index: 9999;
     transition: .32s ease-in-out;
-    background-color: var(--dark-color);
+    background-color: var(--dark-color) !important;
     color: var(--secondary-color) !important;
     border-bottom-right-radius: 1rem;
     border-bottom-left-radius: 1rem;
+    flex-direction: column;
 }
 
 .navbar-elements-container{
@@ -16,7 +17,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    margin: 2rem;
+    margin: 1rem;
 }
 
 .nav-item {

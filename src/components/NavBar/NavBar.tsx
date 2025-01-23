@@ -10,9 +10,9 @@ interface NavBarProps {
     const [selectedIndex, setSelectedIndex] = useState(-1);
   
     return (
-      <nav className="navbar navbar-expand-md navbar-light bg-white shadow">
+      <nav className="navbar navbar-expand-md navbar-light shadow">
         <div>
-          <h4 className="workInProgressMessage">THIS IS A WORK IN PROGRESS, SOME FUNCTIONS MAY NOT OPERATE PROPERLY</h4>
+          <h6 className="workInProgressMessage">THIS IS A WORK IN PROGRESS, SOME FUNCTIONS MAY NOT OPERATE PROPERLY</h6>
         </div>
         <div className="navbar-elements-container">
           {/* <button

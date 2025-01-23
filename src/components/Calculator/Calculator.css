@@ -27,7 +27,7 @@
 
 
 .categoryHeader{
-margin-bottom: .75rem;
+    margin-bottom: .75rem;
 }
 
 .categoryDesc{
@@ -42,4 +42,5 @@ margin-bottom: .75rem;
     display: flex;
     align-items: center;
     gap: .25rem;
+    color: var(--dark-color) !important;
 }
