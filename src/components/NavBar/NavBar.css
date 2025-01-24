@@ -41,7 +41,7 @@
 }
 
 .workInProgressMessage{
-    color: red;
+    color: red !important;
 }
 
 /* .navbarContainer{

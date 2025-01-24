@@ -43,4 +43,9 @@
     align-items: center;
     gap: .25rem;
     color: var(--dark-color) !important;
+    margin-bottom: 0 !important;
+}
+
+.form-control{
+    padding: .1rem .2rem !important;
 }
