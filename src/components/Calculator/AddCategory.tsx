@@ -2,6 +2,9 @@ import './AddCategory.css';
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import Dropdown from 'react-bootstrap/Dropdown';
+import { DropdownButton } from 'react-bootstrap';
+
 
 interface AddCategoryProps {
   onAddCategory: (categoryName: string) => void;
@@ -9,6 +12,7 @@ interface AddCategoryProps {
 
 function AddCategory({ onAddCategory }: AddCategoryProps) {
   const [newCategoryName, setNewCategoryName] = useState('');
+  const [newSector, setNewSector] = useState('Set the Sector');
 
   const handleAdd = () => {
     if (newCategoryName.trim() !== '') {
@@ -21,7 +25,11 @@ function AddCategory({ onAddCategory }: AddCategoryProps) {
     <div className="addCategory">
       <Form.Group>
         <div className='formField'>
-        <Form.Label>Add a Category: </Form.Label>
+        <DropdownButton id="dropdown-basic-button" title={newSector}>
+          <Dropdown.Item onClick={() => setNewSector('Income')}>Income</Dropdown.Item>
+          <Dropdown.Item onClick={() => setNewSector('Fixed Expenses')}>Fixed Expenses</Dropdown.Item>
+          <Dropdown.Item onClick={() => setNewSector('Non-Fixed Expenses')}>Non-Fixed Expenses</Dropdown.Item>
+        </DropdownButton>
         <Form.Control
           type="text"
           value={newCategoryName}

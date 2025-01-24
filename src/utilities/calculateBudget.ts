@@ -1,14 +1,4 @@
-export interface CategoryField {
-    id: string;
-    label: string;
-    value: string;
-  }
-  
-  export interface Category {
-    name: string;
-    description?: string;
-    fields: CategoryField[];
-  }
+import { Category } from "../models/Category";
   
   export function calculateBudget(categories: Category[]) {
     const income = categories.find(category => category.name === 'Income')?.fields.find(field => field.id === 'incomeTotal')?.value || '0';
