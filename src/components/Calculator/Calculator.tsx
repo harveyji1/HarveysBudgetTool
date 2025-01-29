@@ -37,13 +37,19 @@ function Calculator() {
     },
   ]);
 
-  const handleAddCategory = (newCategoryName: string) => {
-    const nonFixedExpensesIndex = categories.findIndex((cat) => cat.name === 'Non-Fixed Expenses');
-    if (nonFixedExpensesIndex !== -1) {
+  const handleAddCategory = (newCategoryName: string, sectorName: string) => {
+    const sectorIndex = categories.findIndex((cat) => cat.name === sectorName);
+    if (sectorIndex !== -1) {
       const updatedCategories = [...categories];
-      const newField = { id: newCategoryName.toLowerCase().replace(/\s+/g, ''), label: `${newCategoryName}: `, value: '' };
-      updatedCategories[nonFixedExpensesIndex].fields.push(newField);
+      const newField = {
+        id: newCategoryName.toLowerCase().replace(/\s+/g, ''),
+        label: `${newCategoryName}: `,
+        value: '',
+      };
+      updatedCategories[sectorIndex].fields.push(newField);
       setCategories(updatedCategories);
+    } else {
+      console.error(`Sector "${sectorName}" not found`);
     }
   };
 
