@@ -53,6 +53,17 @@ function Calculator() {
     }
   };
 
+  const handleDelete = (id: string, sectorName: string) => {
+    const sectorIndex = categories.findIndex((cat) => cat.name === sectorName);
+    if (sectorIndex !== -1) {
+      const updatedCategories = [...categories];
+      updatedCategories[sectorIndex].fields = updatedCategories[sectorIndex].fields.filter((item) => item.id !== id);
+      setCategories(updatedCategories);
+    }else {
+      console.error(`Sector "${sectorName}" not found`);
+    }
+  };
+
   const handleFieldChange = (categoryIndex: number, fieldIndex: number, value: string) => {
     const updatedCategories = [...categories];
     updatedCategories[categoryIndex].fields[fieldIndex].value = value;
@@ -75,7 +86,13 @@ function Calculator() {
             <Form.Group className='inputs'>
               {category.fields.map((field: CategoryField, fieldIndex: number) => (
                 <div key={fieldIndex} className='formField'>
-                  <Form.Label className='categoryLabel'><TiDelete/>{field.label}</Form.Label>
+                  <Form.Label className='categoryLabel'>
+                    <TiDelete
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleDelete(field.id, category.name)}
+                    />
+                    {field.label}
+                  </Form.Label>
                   <Form.Control
                     type='number'
                     value={field.value}
