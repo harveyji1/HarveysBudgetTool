@@ -7,11 +7,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   // const [count, setCount] = useState(0)
-  const items = ["Calculator","AI Suggestions", "Contact"];
   return (
     <div>
-      <NavBar
-        navItems={items}/>
+      <NavBar/>
       <Calculator/>
     </div>
 

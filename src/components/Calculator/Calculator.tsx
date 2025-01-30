@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
 import { calculateBudget} from '../../utilities/calculateBudget.ts';
-import AddCategory from './AddCategory'; 
+import AddField from './AddField.tsx'; 
 import { TiDelete } from 'react-icons/ti';
 import { Category, CategoryField } from '../../models/Category.ts';
 
@@ -37,19 +37,30 @@ function Calculator() {
     },
   ]);
 
-  const handleAddCategory = (newCategoryName: string, sectorName: string) => {
-    const sectorIndex = categories.findIndex((cat) => cat.name === sectorName);
+  const handleAddField = (newFieldName: string, categoryName: string) => {
+    const sectorIndex = categories.findIndex((cat) => cat.name === categoryName);
     if (sectorIndex !== -1) {
       const updatedCategories = [...categories];
       const newField = {
-        id: newCategoryName.toLowerCase().replace(/\s+/g, ''),
-        label: `${newCategoryName}: `,
+        id: newFieldName.toLowerCase().replace(/\s+/g, ''),
+        label: `${newFieldName}: `,
         value: '',
       };
       updatedCategories[sectorIndex].fields.push(newField);
       setCategories(updatedCategories);
     } else {
-      console.error(`Sector "${sectorName}" not found`);
+      console.error(`Category "${categoryName}" not found`);
+    }
+  };
+
+  const handleDelete = (id: string, categoryName: string) => {
+    const categoryIndex = categories.findIndex((cat) => cat.name === categoryName);
+    if (categoryIndex !== -1) {
+      const updatedCategories = [...categories];
+      updatedCategories[categoryIndex].fields = updatedCategories[categoryIndex].fields.filter((item) => item.id !== id);
+      setCategories(updatedCategories);
+    }else {
+      console.error(`Category "${categoryName}" not found`);
     }
   };
 
@@ -66,7 +77,7 @@ function Calculator() {
   };
 
   return (
-    <Form className='calculatorForm'>
+    <Form className='calculatorForm' id='calculator'>
       <div className='calculatorInputs'>
         {categories.map((category, categoryIndex) => (
           <div key={categoryIndex} className='category'>
@@ -75,7 +86,13 @@ function Calculator() {
             <Form.Group className='inputs'>
               {category.fields.map((field: CategoryField, fieldIndex: number) => (
                 <div key={fieldIndex} className='formField'>
-                  <Form.Label className='categoryLabel'><TiDelete/>{field.label}</Form.Label>
+                  <Form.Label className='fieldLabel'>
+                    <TiDelete
+                      className='deleteIcon'
+                      onClick={() => handleDelete(field.id, category.name)}
+                    />
+                    {field.label}
+                  </Form.Label>
                   <Form.Control
                     type='number'
                     value={field.value}
@@ -85,7 +102,7 @@ function Calculator() {
               ))}
             </Form.Group>
             {category.name === 'Non-Fixed Expenses' && (
-              <AddCategory onAddCategory={handleAddCategory} />
+              <AddField onAddField={handleAddField} />
             )}
           </div>
         ))}

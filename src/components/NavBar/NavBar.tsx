@@ -1,11 +1,8 @@
 import { useState } from "react";
 import "./NavBar.css";
-
-interface NavBarProps {
-    navItems: string[];
-  }
-  
-  function NavBar({ navItems }: NavBarProps) {
+import { Nav } from "react-bootstrap";
+ 
+  function NavBar() {
   
     const [selectedIndex, setSelectedIndex] = useState(-1);
   
@@ -15,52 +12,10 @@ interface NavBarProps {
           <h6 className="workInProgressMessage">THIS IS A WORK IN PROGRESS, SOME FUNCTIONS MAY NOT OPERATE PROPERLY</h6>
         </div>
         <div className="navbar-elements-container">
-          {/* <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon" />
-          </button> */}
-          <div
-            className="collapse
-           navbar-collapse"
-          id="navbarSupportedContent">
-            <div className="navbar-nav">
-              {navItems.map((items, index) => (
-                <li
-                  key={items}
-                  className="nav-item"
-                  onClick={() => setSelectedIndex(index)}
-                >
-                  <a
-                    className={
-                      selectedIndex == index
-                        ? "nav-link active fw-bold"
-                        : "nav-link"
-                    }
-                    href="#"
-                  >
-                    {items}
-                  </a>
-                </li>
-              ))}
-            </div>
-            {/* <form className="d-flex me-3">
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button className="btn btn-outline-success" type="submit">
-                Search
-              </button>
-            </form> */}
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <Nav.Link href="#calculator" className={selectedIndex === 0 ? 'active navbar-link' : 'navbar-link'} onClick={() => setSelectedIndex(0)}>Calculator</Nav.Link>
+            <Nav.Link href="#aiSuggestions" className={selectedIndex === 1 ? 'active navbar-link' : 'navbar-link'} onClick={() => setSelectedIndex(1)}>AI Suggestions</Nav.Link>
+            <Nav.Link href="#contact" className={selectedIndex === 2 ? 'active navbar-link' : 'navbar-link'} onClick={() => setSelectedIndex(2)}>Contact</Nav.Link>
           </div>
         </div>
       </nav>
