@@ -38,7 +38,7 @@
     text-align: left;
 }
 
-.categoryLabel{
+.fieldLabel{
     display: flex;
     align-items: center;
     gap: .25rem;
@@ -48,4 +48,31 @@
 
 .form-control{
     padding: .1rem .2rem !important;
+}
+
+.deleteIcon{
+    cursor: pointer;
+    
+}
+
+.deleteIcon:hover{
+    color: red;
+}
+
+.navbar-collapse{
+    gap: 2rem;
+
+}
+
+.navbar-link {
+    font-weight: 400;
+    color: var(--bright-color) !important;
+    letter-spacing: 0.8px;
+    padding: 0 25px;
+    font-size: 18px;
+    opacity: 0.75;
+}
+
+.navbar-link.active {
+    opacity: 1;
 }
