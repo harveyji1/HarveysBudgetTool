@@ -6,6 +6,11 @@
   text-align: center;
 }
 
+.siteTitle{
+  margin-top: 6rem;
+  color: var(--primary-color) !important;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;

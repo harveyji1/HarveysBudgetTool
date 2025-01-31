@@ -16,7 +16,7 @@ function AddField({ onAddField }: AddFieldProps) {
 
   const handleAdd = () => {
     if (newFieldName.trim() === '') {
-      setError('Please enter a category name.');
+      setError('Please enter a field name.');
       return;
     }
     if (newCategory === 'Set the Category') {
