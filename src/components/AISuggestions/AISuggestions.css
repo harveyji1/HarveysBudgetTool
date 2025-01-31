@@ -1,0 +1,6 @@
+.aiHeader{
+    margin-top: 5rem;
+    scroll-margin-top: 5rem;
+    margin-bottom: 5rem;
+    color: var(--primary-color) !important;
+}
