@@ -17,7 +17,7 @@
     width: 90%;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 6rem;
+    gap: 1rem;
 }
 
 .contactCard{
@@ -38,3 +38,13 @@
     font-size: 32px;
 }
 
+.portfolioCard{
+    /* display: flex; */
+    background-color: var(--primary-color);
+    border-radius: 1rem;
+    margin: 1rem;
+    padding: 1rem;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}

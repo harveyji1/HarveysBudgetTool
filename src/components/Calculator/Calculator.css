@@ -4,6 +4,10 @@
     border-radius: .5rem;
     margin-top: 5rem;
     scroll-margin-top: 7.5rem;
+    max-width: 35rem;
+    width: 100%;
+    align-self: center;
+    justify-self: center;
 }
 .calculatorInputs{
     margin: 1rem;
@@ -11,14 +15,14 @@
 
 .formField{
     display: grid;
-    grid-template-columns: 12rem 12rem;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
     margin-bottom: 1rem;
     justify-content: center;
 }
 
 .fixedExpenses{
     display: grid;
-    grid-template-columns: 12rem 12rem;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
     margin-bottom: 1rem;
 }
 
@@ -58,22 +62,4 @@
 
 .deleteIcon:hover{
     color: red;
-}
-
-.navbar-collapse{
-    gap: 2rem;
-
-}
-
-.navbar-link {
-    font-weight: 400;
-    color: var(--bright-color) !important;
-    letter-spacing: 0.8px;
-    padding: 0 25px;
-    font-size: 18px;
-    opacity: 0.75;
-}
-
-.navbar-link.active {
-    opacity: 1;
 }

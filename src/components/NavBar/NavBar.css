@@ -44,18 +44,20 @@
     color: red !important;
 }
 
-/* .navbarContainer{
+.navbar-collapse{
+    gap: 2rem;
 
 }
 
-.navbarSections{
-    display: flex;
-    flex-direction: row;
-    width: 90%;
-    justify-content: center;
+.navbar-link {
+    font-weight: 400;
+    color: var(--bright-color) !important;
+    letter-spacing: 0.8px;
+    padding: 0 25px;
+    font-size: 18px;
+    opacity: 0.75;
 }
 
-.navbarSection{
-    display: flex;
-    flex-direction: row;
-} */
+.navbar-link.active {
+    opacity: 1;
+}
