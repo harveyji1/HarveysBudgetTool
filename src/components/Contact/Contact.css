@@ -1,0 +1,40 @@
+#contact{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 75px 0;
+    width: 90%;
+    margin: 0 auto 100px;
+}
+
+.contactHeader{
+    color: var(--primary-color) !important;
+}
+
+.contactContainer{
+    width: 90%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+}
+
+.contactCard{
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    padding: 1rem 0;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem;
+}
+
+.contactIcon{
+    font-size: 32px;
+}
+

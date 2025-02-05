@@ -4,6 +4,7 @@ import Calculator from './components/Calculator/Calculator';
 import AISuggestions from './components/AISuggestions/AISuggestions';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Contact from './components/Contact/Contact';
 
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
       <h1 className='siteTitle'>Harveys AI Budget Tool</h1>
       <Calculator/>
       <AISuggestions/>
+      <Contact/>
     </div>
 
   )
