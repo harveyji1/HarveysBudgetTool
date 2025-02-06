@@ -39,12 +39,19 @@
 }
 
 .portfolioCard{
-    /* display: flex; */
+    display: flex;
+    flex-direction: column;
     background-color: var(--primary-color);
     border-radius: 1rem;
     margin: 1rem;
     padding: 1rem;
+    gap: 1rem;
     width: 100%;
     justify-content: center;
     align-items: center;
+}
+
+.portfolioButton{
+    border-radius: .5rem;
+    /* cursor: pointer !important; */
 }

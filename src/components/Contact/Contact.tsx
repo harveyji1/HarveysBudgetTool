@@ -3,6 +3,9 @@ import './Contact.css';
 import { IoPhonePortraitOutline } from 'react-icons/io5';
 
 function Contact() {
+    const navigateToPortfolio = () => {
+        window.location.href = "https://harveyji1.github.io/portfolio/";
+      };
     return(
         <div id='contact'>
             <h1 className='contactHeader'>Contact Me</h1>
@@ -22,6 +25,7 @@ function Contact() {
                 <div className='portfolioCard'>
                 <h3>Like this Project?</h3>
                 <h5>Check out the rest of my portfolio!</h5>
+                <button className='portfolioButton' onClick={navigateToPortfolio}>My Portfolio</button>
                 </div>
             </div>
 
