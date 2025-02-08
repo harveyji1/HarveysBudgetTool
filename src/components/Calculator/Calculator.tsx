@@ -2,12 +2,17 @@ import './Calculator.css';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
-import { calculateBudget} from '../../utilities/calculateBudget.ts';
+//import { calculateBudget} from '../../utilities/calculateBudget.ts';
 import AddField from './AddField.tsx'; 
 import { TiDelete } from 'react-icons/ti';
 import { Category, CategoryField } from '../../models/Category.ts';
 
-function Calculator() {
+
+interface CalculatorProps {
+  onAskAI: () => void;  // Function passed from App.tsx to trigger AI request
+}
+
+const Calculator: React.FC<CalculatorProps> = ({ onAskAI }) =>{
   // Define categories and fields as data
   const [categories, setCategories] = useState<Category[]>([
     {
@@ -70,11 +75,11 @@ function Calculator() {
     setCategories(updatedCategories);
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    const results = calculateBudget(categories);
-    console.log('Calculation Results:', results);
-  };
+  // const handleSubmit = (event: React.FormEvent) => {
+  //   event.preventDefault();
+  //   const results = calculateBudget(categories);
+  //   console.log('Calculation Results:', results);
+  // };
 
   return (
     <Form className='calculatorForm' id='calculator'>
@@ -116,7 +121,7 @@ function Calculator() {
           //onChange={(e) => handleFieldChange(categoryIndex, fieldIndex, e.target.value)}
         />
       </div>
-      <Button onClick={handleSubmit}>Get AI Suggestions!</Button>
+      <Button onClick={onAskAI} href="#aiSuggestions">Get AI Suggestions!</Button>
     </Form>
   );
 }
