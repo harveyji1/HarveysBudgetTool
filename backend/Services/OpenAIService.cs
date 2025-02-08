@@ -16,35 +16,37 @@ public class OpenAIService
     }
 
     public async Task<string> GetAIResponse(string prompt)
+{
+    var requestBody = new
     {
-        var requestBody = new
-        {
-            model = "gpt-3.5-turbo",
-            messages = new[] {
-                new {
-                    role = "user",
-                    content = prompt
-                }
-            },
-            max_tokens = 100
-        };
+        model = "gpt-3.5-turbo",
+        messages = new[] {
+            new {
+                role = "user",
+                content = prompt
+            }
+        },
+        max_tokens = 100
+    };
 
-        var requestJson = JsonSerializer.Serialize(requestBody);
-        var requestContent = new StringContent(requestJson, Encoding.UTF8, "application/json");
+    var requestJson = JsonSerializer.Serialize(requestBody);
+    var requestContent = new StringContent(requestJson, Encoding.UTF8, "application/json");
 
-        _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {_apiKey}");
+    // Create a new HttpRequestMessage to ensure headers don't persist
+    using var request = new HttpRequestMessage(HttpMethod.Post, "https://api.openai.com/v1/chat/completions")
+    {
+        Content = requestContent
+    };
+    
+    // Set the Authorization header for this request only
+    request.Headers.Add("Authorization", $"Bearer {_apiKey}");
 
-        //Console.WriteLine("Request Content:" + requestContent);
-        var response = await _httpClient.PostAsync("https://api.openai.com/v1/chat/completions", requestContent);
-        //Console.WriteLine("Response: " + response.StatusCode);
+    using var response = await _httpClient.SendAsync(request);
 
-        // Ensure success status code or throw an exception
-        response.EnsureSuccessStatusCode();
-
-        var responseJson = await response.Content.ReadAsStringAsync();
-        using var doc = JsonDocument.Parse(responseJson);
-
-        // Return the AI response text
-        return doc.RootElement.GetProperty("choices")[0].GetProperty("message").GetProperty("content").GetString();
-    }
+    response.EnsureSuccessStatusCode();
+    var responseJson = await response.Content.ReadAsStringAsync();
+    
+    using var doc = JsonDocument.Parse(responseJson);
+    return doc.RootElement.GetProperty("choices")[0].GetProperty("message").GetProperty("content").GetString();
+}
 }

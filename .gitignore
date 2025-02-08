@@ -24,3 +24,10 @@ dist-ssr
 *.sw?
 .env
 appsettings.json
+
+# Ignore build folders
+*/bin/
+*/obj/
+
+# Ignore Visual Studio temporary folders
+.vs/
