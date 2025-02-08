@@ -12,9 +12,9 @@ function Calculator() {
   const [categories, setCategories] = useState<Category[]>([
     {
       name: 'Income',
-      description: '',
+      description: 'Your income after taxes',
       fields: [
-        { id: 'incomeTotal', label: 'Income: ', value: '' },
+        { id: 'incomeTotal', label: 'Salary: ', value: '' },
       ],
     },
     {
@@ -107,7 +107,16 @@ function Calculator() {
           </div>
         ))}
       </div>
-      <Button onClick={handleSubmit}>Calculate</Button>
+      <div className='formField'>
+      <Form.Label className='fieldLabel'>
+        Remaining Money: 
+      </Form.Label>
+        <Form.Control
+          type='number'
+          //onChange={(e) => handleFieldChange(categoryIndex, fieldIndex, e.target.value)}
+        />
+      </div>
+      <Button onClick={handleSubmit}>Get AI Suggestions!</Button>
     </Form>
   );
 }
