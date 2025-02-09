@@ -63,3 +63,8 @@
 .deleteIcon:hover{
     color: red;
 }
+
+.aiSuggestButton{
+    background-color: var(--secondary-color) !important;
+    border-color: var(--secondary-color) !important;
+}

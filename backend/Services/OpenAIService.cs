@@ -31,7 +31,7 @@ public class OpenAIService
             {
                 new { role = "user", content = prompt }
             },
-            max_tokens = 100
+            max_tokens = 500
         };
 
         var requestJson = JsonSerializer.Serialize(requestBody);
