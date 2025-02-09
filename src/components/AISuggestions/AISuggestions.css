@@ -1,8 +1,16 @@
-.aiHeader{
-    margin-top: 5rem;
+#aiSuggestions{
     scroll-margin-top: 5rem;
-    margin-bottom: 5rem;
+    padding-top: 5rem;
+
+}
+.aiHeader{
+    /* scroll-margin-top: 2.5rem; */
     color: var(--primary-color) !important;
+}
+
+.aiSubHeader{
+    margin-bottom: 3.5rem;
+    color: var(--bright-color) !important;
 }
 
 .suggestedText{

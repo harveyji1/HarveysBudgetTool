@@ -14,9 +14,9 @@ function App() {
   const [aiResponse, setAiResponse] = useState<string>('');
 
   // Function to handle asking AI and setting the response
-  const handleAskAIButtonClick = async () => {
-      const response = await callOpenAI();
-      setAiResponse(response);  // Store the response in state
+  const handleAskAIButtonClick = async (formattedData: string) => {
+    const response = await callOpenAI(formattedData);
+    setAiResponse(response);
   };
 
   return (

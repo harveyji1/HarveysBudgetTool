@@ -6,14 +6,14 @@ import { useState } from 'react';
 import AddField from './AddField.tsx'; 
 import { TiDelete } from 'react-icons/ti';
 import { Category, CategoryField } from '../../models/Category.ts';
+import { formatCategories } from '../../utilities/formatCategories.ts';
 
 
 interface CalculatorProps {
-  onAskAI: () => void;  // Function passed from App.tsx to trigger AI request
+  onAskAI: (formattedData: string) => void;
 }
 
 const Calculator: React.FC<CalculatorProps> = ({ onAskAI }) =>{
-  // Define categories and fields as data
   const [categories, setCategories] = useState<Category[]>([
     {
       name: 'Income',
@@ -75,6 +75,11 @@ const Calculator: React.FC<CalculatorProps> = ({ onAskAI }) =>{
     setCategories(updatedCategories);
   };
 
+  const handleAskAI = () => {
+    const formattedData = formatCategories(categories);  // Use the utility function
+    onAskAI(formattedData);  // Pass formatted data to parent (or backend)
+  };
+
   // const handleSubmit = (event: React.FormEvent) => {
   //   event.preventDefault();
   //   const results = calculateBudget(categories);
@@ -112,7 +117,7 @@ const Calculator: React.FC<CalculatorProps> = ({ onAskAI }) =>{
           </div>
         ))}
       </div>
-      <div className='formField'>
+      {/* <div className='formField'>
       <Form.Label className='fieldLabel'>
         Remaining Money: 
       </Form.Label>
@@ -120,8 +125,8 @@ const Calculator: React.FC<CalculatorProps> = ({ onAskAI }) =>{
           type='number'
           //onChange={(e) => handleFieldChange(categoryIndex, fieldIndex, e.target.value)}
         />
-      </div>
-      <Button onClick={onAskAI} href="#aiSuggestions">Get AI Suggestions!</Button>
+      </div> */}
+      <Button onClick={handleAskAI} href="#aiSuggestions" className='aiSuggestButton'>Get AI Suggestions!</Button>
     </Form>
   );
 }
