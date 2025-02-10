@@ -7,6 +7,7 @@ import AddField from './AddField.tsx';
 import { TiDelete } from 'react-icons/ti';
 import { Category, CategoryField } from '../../models/Category.ts';
 import { formatCategories } from '../../utilities/formatCategories.ts';
+import RemainingMoney from './RemainingMoney.tsx';
 
 
 interface CalculatorProps {
@@ -19,7 +20,7 @@ const Calculator: React.FC<CalculatorProps> = ({ onAskAI }) =>{
       name: 'Income',
       description: 'Your income after taxes',
       fields: [
-        { id: 'incomeTotal', label: 'Salary: ', value: '' },
+        { id: 'salary', label: 'Salary: ', value: '' },
       ],
     },
     {
@@ -30,15 +31,16 @@ const Calculator: React.FC<CalculatorProps> = ({ onAskAI }) =>{
         { id: 'carPayments', label: 'Car Payments: ', value: '' },
         { id: 'debtPayments', label: 'Debt Payments: ', value: '' },
         { id: 'insurance', label: 'Insurance: ', value: '' },
-        { id: 'investments', label: 'Investments: ', value: '' },
         { id: 'tuition', label: 'Tuition: ', value: '' },
-        { id: 'emergencyFunds', label: 'Emergency Funds: ', value: '' },
       ],
     },
     {
       name: 'Non-Fixed Expenses',
       description: 'Expenses that you want to budget for',
-      fields: [],
+      fields: [
+        { id: 'investments', label: 'Investments: ', value: '' },
+        { id: 'emergencyFunds', label: 'Emergency Funds: ', value: '' },
+      ],
     },
   ]);
 
@@ -76,8 +78,9 @@ const Calculator: React.FC<CalculatorProps> = ({ onAskAI }) =>{
   };
 
   const handleAskAI = () => {
-    const formattedData = formatCategories(categories);  // Use the utility function
-    onAskAI(formattedData);  // Pass formatted data to parent (or backend)
+    const formattedData = formatCategories(categories);  //Format the categories
+    console.log(formattedData);
+    onAskAI(formattedData);  // Pass formatted data
   };
 
   // const handleSubmit = (event: React.FormEvent) => {
@@ -117,15 +120,7 @@ const Calculator: React.FC<CalculatorProps> = ({ onAskAI }) =>{
           </div>
         ))}
       </div>
-      {/* <div className='formField'>
-      <Form.Label className='fieldLabel'>
-        Remaining Money: 
-      </Form.Label>
-        <Form.Control
-          type='number'
-          //onChange={(e) => handleFieldChange(categoryIndex, fieldIndex, e.target.value)}
-        />
-      </div> */}
+      <RemainingMoney categories={categories} />
       <Button onClick={handleAskAI} href="#aiSuggestions" className='aiSuggestButton'>Get AI Suggestions!</Button>
     </Form>
   );
