@@ -1,10 +1,16 @@
-.addField{
+.addFieldContainer{
     margin: 1rem 0rem;
     padding: 1rem;
     border-radius: .5rem;
     /* border: 1px solid var(--bright-color); */
-    background-color: var(--dark-color);
+    /* background-color: var(--dark-color); */
     /* width: 100%; */
+}
+
+.addFieldOptions{
+    background-color: var(--dark-color);
+    padding: 1rem;
+    border-radius: .5rem;
 }
 
 .dropdown-menu{

@@ -2,7 +2,7 @@ import React from 'react';
 import './AISuggestions.css';
 
 interface AISuggestionsProps {
-    aiResponse: string;  // Receive aiResponse from App.tsx
+    aiResponse: string | null;
 }
 
 const AISuggestions: React.FC<AISuggestionsProps> = ({ aiResponse }) => {
@@ -10,7 +10,17 @@ const AISuggestions: React.FC<AISuggestionsProps> = ({ aiResponse }) => {
         <div id="aiSuggestions">
             <h1 className='aiHeader'>AI Suggestions:</h1>
             <h5 className='aiSubHeader'>Powered by Open AI: GPT 3.5 Mini</h5>
-            {aiResponse ? <p className = "suggestedText">{aiResponse}</p> : <p className = "suggestedText">Fill out the Calculator and click the "Get AI Suggestions" Button!</p>}
+
+            {/* Show Loading if aiResponse is empty or null */}
+            {aiResponse === null ? (
+                <p className="suggestedText">Analyzing Budget...</p>
+            ) : aiResponse ? (
+                <p className="suggestedText">{aiResponse}</p>
+            ) : (
+                <p className="suggestedText">
+                    Fill out the Calculator and click the "Get AI Suggestions" button!
+                </p>
+            )}
         </div>
     );
 };

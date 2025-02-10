@@ -11,10 +11,11 @@ import { useState } from 'react';
 
 function App() {
 
-  const [aiResponse, setAiResponse] = useState<string>('');
+  const [aiResponse, setAiResponse] = useState<string | null>('');
 
   // Function to handle asking AI and setting the response
   const handleAskAIButtonClick = async (formattedData: string) => {
+    setAiResponse(null);
     const response = await callOpenAI(formattedData);
     setAiResponse(response);
   };
@@ -22,7 +23,7 @@ function App() {
   return (
     <div>
       <NavBar/>
-      <h1 className='siteTitle'>Harveys AI Budget Tool</h1>
+      <h1 className='siteTitle'>{"Harvey's AI Budget Tool"}</h1>
       <Calculator onAskAI={handleAskAIButtonClick}/>
       <AISuggestions aiResponse={aiResponse} />
       <Contact/>
