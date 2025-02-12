@@ -33,7 +33,7 @@ function AddField({ onAddField }: AddFieldProps) {
   return (
     <div className="addFieldContainer">
       <h3 className='categoryHeader'>Add a Field</h3>
-      <h6 className='categoryDesc'>Add fields to customize for you budget</h6>
+      <h6 className='categoryDesc'>Add fields to customize for your budget</h6>
       <div className='addFieldOptions'>
       <Form.Group>
         <div className="formField">
