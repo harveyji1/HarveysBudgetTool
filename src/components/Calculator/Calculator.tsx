@@ -25,7 +25,7 @@ const Calculator: React.FC<CalculatorProps> = ({ onAskAI }) =>{
     },
     {
       name: 'Fixed Expenses',
-      description: 'Expenses that can not or will not change',
+      description: "Expenses that don't change",
       fields: [
         { id: 'rent', label: 'Rent/Mortgage: ', value: '' },
         { id: 'carPayments', label: 'Car Payments: ', value: '' },
@@ -36,7 +36,7 @@ const Calculator: React.FC<CalculatorProps> = ({ onAskAI }) =>{
     },
     {
       name: 'Non-Fixed Expenses',
-      description: 'Expenses that you want to budget for',
+      description: 'Expenses that are flexible',
       fields: [
         { id: 'investments', label: 'Investments: ', value: '' },
         { id: 'emergencyFunds', label: 'Emergency Funds: ', value: '' },
