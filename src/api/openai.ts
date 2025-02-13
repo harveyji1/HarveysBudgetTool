@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Dynamically set the API base URL based on the environment
 const API_BASE_URL = process.env.NODE_ENV === "production"
-    ? "https://ai-budget-tool-api-f9ecgjbrcna9ancf.centralus-01.azurewebsites.net/api/openai" // Azure production URL
+    ? "https://ai-budget-tool-api-f9ecgjbrcna9ancf.centralus-01.azurewebsites.net/api/openai"
     : "http://localhost:5075/api/openai";
 
 export const getAIResponse = async (prompt: string) => {
