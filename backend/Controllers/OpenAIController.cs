@@ -22,5 +22,5 @@ public class OpenAIController : ControllerBase
 
 public class ChatRequest
 {
-    public string Prompt { get; set; }
+    public required string Prompt { get; set; }
 }

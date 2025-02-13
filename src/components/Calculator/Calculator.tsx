@@ -2,7 +2,7 @@ import './Calculator.css';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
-import { calculateRemaining } from '../../utilities/calculateBudget.ts';
+import { calculateRemaining, calculateIncome } from '../../utilities/calculateBudget.ts';
 import AddField from './AddField.tsx'; 
 import { TiDelete } from 'react-icons/ti';
 import { Category, CategoryField } from '../../models/Category.ts';
@@ -15,6 +15,8 @@ interface CalculatorProps {
 }
 
 const Calculator: React.FC<CalculatorProps> = ({ onAskAI }) =>{
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   const [categories, setCategories] = useState<Category[]>([
     {
       name: 'Income',
@@ -78,17 +80,29 @@ const Calculator: React.FC<CalculatorProps> = ({ onAskAI }) =>{
   };
 
   const handleAskAI = () => {
-    
-    const formattedData = formatCategories(categories);  //Format the categories
+    const income = calculateIncome(categories[0]);
+    const remaining = calculateRemaining(categories);
+  
+    if (income <= 0) {
+      setErrorMessage("Income must be greater than zero.");
+      return;
+    }
+  
+    if (remaining !== 0) {
+      setErrorMessage("Your budget must balance to zero before asking AI for suggestions.");
+      return;
+    }
+  
+    setErrorMessage(null); // Clear any previous errors
+    const formattedData = formatCategories(categories);
     console.log(formattedData);
-    onAskAI(formattedData);  // Pass formatted data
+    onAskAI(formattedData);
+    
+    const aiSuggestionsSection = document.getElementById("aiSuggestions");
+    if (aiSuggestionsSection) {
+      aiSuggestionsSection.scrollIntoView({ behavior: "smooth" });
+    }
   };
-
-  // const handleSubmit = (event: React.FormEvent) => {
-  //   event.preventDefault();
-  //   const results = calculateBudget(categories);
-  //   console.log('Calculation Results:', results);
-  // };
 
   return (
     <Form className='calculatorForm' id='calculator'>
@@ -122,7 +136,8 @@ const Calculator: React.FC<CalculatorProps> = ({ onAskAI }) =>{
         ))}
       </div>
       <RemainingMoney remainingMoney={calculateRemaining(categories)} />
-      <Button onClick={handleAskAI} href="#aiSuggestions" className='aiSuggestButton'>Get AI Suggestions!</Button>
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
+      <Button onClick={handleAskAI} className='aiSuggestButton'>Get AI Suggestions!</Button>
     </Form>
   );
 }
