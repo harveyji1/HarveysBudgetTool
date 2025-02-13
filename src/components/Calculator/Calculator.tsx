@@ -2,7 +2,7 @@ import './Calculator.css';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
-//import { calculateBudget} from '../../utilities/calculateBudget.ts';
+import { calculateRemaining } from '../../utilities/calculateBudget.ts';
 import AddField from './AddField.tsx'; 
 import { TiDelete } from 'react-icons/ti';
 import { Category, CategoryField } from '../../models/Category.ts';
@@ -78,6 +78,7 @@ const Calculator: React.FC<CalculatorProps> = ({ onAskAI }) =>{
   };
 
   const handleAskAI = () => {
+    
     const formattedData = formatCategories(categories);  //Format the categories
     console.log(formattedData);
     onAskAI(formattedData);  // Pass formatted data
@@ -120,7 +121,7 @@ const Calculator: React.FC<CalculatorProps> = ({ onAskAI }) =>{
           </div>
         ))}
       </div>
-      <RemainingMoney categories={categories} />
+      <RemainingMoney remainingMoney={calculateRemaining(categories)} />
       <Button onClick={handleAskAI} href="#aiSuggestions" className='aiSuggestButton'>Get AI Suggestions!</Button>
     </Form>
   );
