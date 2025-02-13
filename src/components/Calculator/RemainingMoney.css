@@ -1,0 +1,7 @@
+.remainingBudgetContainer{
+    max-width: 35rem;
+    width: 100%;
+    align-self: center;
+    justify-self: center;
+    padding: 2rem;
+}

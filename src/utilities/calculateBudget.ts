@@ -1,18 +1,19 @@
 import { Category } from "../models/Category";
+
+  export function calculateIncome(incomeCategory: Category | undefined){
+    const totalIncome = incomeCategory?.fields.reduce((sum, field) => sum + Number(field.value || 0), 0) || 0;
+    return(totalIncome)
+  }
   
-  export function calculateBudget(categories: Category[]) {
-    const income = categories.find(category => category.name === 'Income')?.fields.find(field => field.id === 'incomeTotal')?.value || '0';
-    const fixedExpenses = categories
-      .find(category => category.name === 'Fixed Expenses')?.fields
-      .reduce((total, field) => total + (parseFloat(field.value) || 0), 0) || 0;
-  
-    const remainingBudget = parseFloat(income) - fixedExpenses;
-  
-    return {
-      income: parseFloat(income),
-      fixedExpenses,
-      remainingBudget,
-    };
+  export function calculateRemaining(categories: Category[]) {
+    const income = calculateIncome(categories.find((cat) => cat.name === 'Income'));
+
+  const expenses = categories.filter((cat) => cat.name !== 'Income').reduce((sum, cat) => {
+    return sum + cat.fields.reduce((subSum, field) => subSum + Number(field.value || 0), 0);
+  }, 0); // Exclude income
+
+
+  return income - expenses;
   }
 
-  export default calculateBudget;
+  export default calculateRemaining;
