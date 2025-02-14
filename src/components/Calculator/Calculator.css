@@ -67,4 +67,9 @@
 .aiSuggestButton{
     background-color: var(--secondary-color) !important;
     border-color: var(--secondary-color) !important;
+    margin-top: 1rem;
+}
+
+.error-message{
+    color:var(--dark-color) !important;
 }
