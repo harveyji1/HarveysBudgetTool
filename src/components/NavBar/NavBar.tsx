@@ -8,9 +8,6 @@ import { Nav } from "react-bootstrap";
   
     return (
       <nav className="navbar navbar-expand-md navbar-light shadow">
-        <div>
-          <h6 className="workInProgressMessage">THIS IS A WORK IN PROGRESS, SOME FUNCTIONS MAY NOT OPERATE PROPERLY</h6>
-        </div>
         <div className="navbar-elements-container">
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <Nav.Link href="#calculator" className={selectedIndex === 0 ? 'active navbar-link' : 'navbar-link'} onClick={() => setSelectedIndex(0)}>Calculator</Nav.Link>

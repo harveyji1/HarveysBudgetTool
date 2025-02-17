@@ -11,6 +11,6 @@ export const getAIResponse = async (prompt: string) => {
         return response.data.response;
     } catch (error) {
         console.error("Error fetching AI response:", error);
-        return "Error connecting to AI service.";
+        return "Error connecting to AI service. Please try again later.";
     }
 };

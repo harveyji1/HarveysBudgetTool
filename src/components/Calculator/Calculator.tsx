@@ -23,6 +23,7 @@ const Calculator: React.FC<CalculatorProps> = ({ onAskAI }) =>{
       description: 'Your income after taxes',
       fields: [
         { id: 'salary', label: 'Salary: ', value: '' },
+        { id: 'dividends', label: 'Dividends: ', value: '' },
       ],
     },
     {
@@ -31,17 +32,14 @@ const Calculator: React.FC<CalculatorProps> = ({ onAskAI }) =>{
       fields: [
         { id: 'rent', label: 'Rent/Mortgage: ', value: '' },
         { id: 'carPayments', label: 'Car Payments: ', value: '' },
-        { id: 'debtPayments', label: 'Debt Payments: ', value: '' },
-        { id: 'insurance', label: 'Insurance: ', value: '' },
-        { id: 'tuition', label: 'Tuition: ', value: '' },
       ],
     },
     {
       name: 'Non-Fixed Expenses',
       description: 'Expenses that are flexible',
       fields: [
-        { id: 'investments', label: 'Investments: ', value: '' },
-        { id: 'emergencyFunds', label: 'Emergency Funds: ', value: '' },
+        { id: 'savings', label: 'Savings: ', value: '' },
+        { id: 'food', label: 'Food: ', value: '' },
       ],
     },
   ]);
@@ -129,12 +127,10 @@ const Calculator: React.FC<CalculatorProps> = ({ onAskAI }) =>{
                 </div>
               ))}
             </Form.Group>
-            {category.name === 'Non-Fixed Expenses' && (
-              <AddField onAddField={handleAddField} />
-            )}
           </div>
         ))}
       </div>
+      <AddField onAddField={handleAddField} />
       <RemainingMoney remainingMoney={calculateRemaining(categories)} />
       {errorMessage && <p className="error-message">{errorMessage}</p>}
       <Button onClick={handleAskAI} className='aiSuggestButton'>Get AI Suggestions!</Button>
