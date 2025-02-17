@@ -4,7 +4,7 @@
     border-radius: .5rem;
     margin-top: 5rem;
     scroll-margin-top: 7.5rem;
-    max-width: 35rem;
+    /* max-width: 35rem; */
     width: 100%;
     align-self: center;
     justify-self: center;
@@ -12,10 +12,19 @@
 .calculatorInputs{
     margin: 1rem;
 }
+.category{
+    width: 100%;
+}
+
+.inputs{
+    display: flex;
+    flex-direction: column;
+}
 
 .formField{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
     margin-bottom: 1rem;
     justify-content: center;
 }
