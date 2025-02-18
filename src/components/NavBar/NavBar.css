@@ -5,8 +5,7 @@
     left: 0;
     z-index: 9999;
     transition: .32s ease-in-out;
-    background-color: var(--dark-color) !important;
-    color: var(--secondary-color) !important;
+    background-color: var(--bg-color) !important;
     border-bottom-right-radius: 1rem;
     border-bottom-left-radius: 1rem;
     flex-direction: column;
