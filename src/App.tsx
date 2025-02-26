@@ -5,7 +5,7 @@ import AISuggestions from './components/AISuggestions/AISuggestions';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Contact from './components/Contact/Contact';
-import { callOpenAI } from './utilities/callOpenai';
+import { callSuggestedBudget } from './utilities/callOpenai';
 import { useState } from 'react';
 
 
@@ -16,7 +16,7 @@ function App() {
   // Function to handle asking AI and setting the response
   const handleAskAIButtonClick = async (formattedData: string) => {
     setAiResponse(null);
-    const response = await callOpenAI(formattedData);
+    const response = await callSuggestedBudget(formattedData);
     setAiResponse(response);
   };
 

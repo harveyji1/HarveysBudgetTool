@@ -1,7 +1,7 @@
 var builder = WebApplication.CreateBuilder(args);
 
 // Register the OpenAIService
-builder.Services.AddSingleton<OpenAIService>();
+builder.Services.AddScoped<OpenAIService>();
 
 // CORS Policy: Allow both local and production origins
 builder.Services.AddCors(options =>
