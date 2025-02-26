@@ -22,3 +22,11 @@
 .error-text {
     color:red !important;
 }
+
+.categoryButton{
+    color: var(--dark-color) !important;
+}
+
+.btn-primary{
+    color: var(--dark-color) !important;
+}

@@ -12,15 +12,22 @@ public class OpenAIController : ControllerBase
         _openAIService = openAIService;
     }
 
-    [HttpPost("chat")]
-    public async Task<IActionResult> Chat([FromBody] ChatRequest request)
+    public class ChatRequest
     {
-        var response = await _openAIService.GetAIResponse(request.Prompt);
+        public required string Prompt { get; set; }
+    }
+
+    [HttpPost("suggested-budget")]
+    public async Task<IActionResult> GetSuggestedBudget([FromBody] ChatRequest request)
+    {
+        var response = await _openAIService.GetSuggestedBudget(request.Prompt);
         return Ok(new { response });
     }
-}
 
-public class ChatRequest
-{
-    public required string Prompt { get; set; }
+    [HttpPost("structured-budget")]
+    public async Task<IActionResult> GetStructuredBudget([FromBody] ChatRequest request)
+    {
+        var suggestedBudget = await _openAIService.GetStructuredBudget(request.Prompt);
+        return Ok(new {suggestedBudget});
+    }
 }

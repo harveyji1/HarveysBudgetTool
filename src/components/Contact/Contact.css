@@ -59,5 +59,6 @@
 
 .portfolioButton{
     border-radius: .5rem;
+    color: var(--dark-color) !important;
     /* cursor: pointer !important; */
 }
