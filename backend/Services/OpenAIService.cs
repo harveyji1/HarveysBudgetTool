@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 public class OpenAIService
 {
@@ -39,7 +40,7 @@ public class OpenAIService
         return doc.RootElement.GetProperty("choices")[0].GetProperty("message").GetProperty("content").GetString() ?? string.Empty;
     }
 
-public async Task<List<BudgetCategory>> GetStructuredBudget(string prompt)
+public async Task<string> GetStructuredBudget(string prompt)
 {
     var requestBody = new
     {
@@ -49,31 +50,35 @@ public async Task<List<BudgetCategory>> GetStructuredBudget(string prompt)
             new { role = "system", content = "You are a budgeting assistant that returns structured budget recommendations." },
             new { role = "user", content = prompt }
         },
-        functions = new[]
-        {
-            new {
-                name = "generate_budget",
-                description = "Generate a budget with exact category amounts",
-                parameters = new {
-                    type = "object",
-                    properties = new {
-                        categories = new {
-                            type = "array",
-                            items = new {
-                                type = "object",
-                                properties = new {
-                                    name = new { type = "string" },
-                                    amount = new { type = "number" }
-                                },
-                                required = new[] { "name", "amount" }
-                            }
-                        }
-                    },
-                    required = new[] { "categories" }
-                }
-            }
-        },
-        function_call = "auto"
+//   functions = new[]
+//     {
+//         new
+//         {
+//             name = "generate_budget",
+//             description = "Generate a budget with exact category amounts",
+//             parameters = new
+//             {
+//                 type = "object",
+//                 properties = new
+//                 {
+//                     categories = new
+//                     {
+//                         type = "array",
+//                         items = new
+//                         {
+//                             type = "object",
+//                             properties = new
+//                             {
+//                                 name = new { type = "string" },
+//                                 amount = new { type = "number" }
+//                             }
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     },
+//     function_call = "auto"
     };
 
     var requestJson = JsonSerializer.Serialize(requestBody);
@@ -86,25 +91,40 @@ public async Task<List<BudgetCategory>> GetStructuredBudget(string prompt)
     Console.WriteLine("OpenAI Response: " + responseJson); // Debugging output
 
     response.EnsureSuccessStatusCode();
+    using var doc = JsonDocument.Parse(responseJson);
 
-    var parsedResponse = JsonSerializer.Deserialize<OpenAiResponse>(responseJson);
+    return doc.RootElement.GetProperty("choices")[0].GetProperty("message").GetProperty("content").GetString() ?? string.Empty;
 
-    // Handle OpenAI errors
-    if (parsedResponse?.Error != null)
-    {
-        throw new Exception($"OpenAI API Error: {parsedResponse.Error.Message}");
-    }
+//     var parsedResponse = JsonSerializer.Deserialize<OpenAiResponse>(responseJson);
 
-    var functionCallArgumentsJson = parsedResponse?.Choices?.FirstOrDefault()?.Message?.FunctionCall?.Arguments;
+//     Console.WriteLine("Parsed Response: " + JsonSerializer.Serialize(parsedResponse, new JsonSerializerOptions { WriteIndented = true }));
 
-    if (string.IsNullOrEmpty(functionCallArgumentsJson))
-    {
-        Console.WriteLine("No function call arguments returned from OpenAI.");
-        return new List<BudgetCategory>();
-    }
-    var arguments = JsonSerializer.Deserialize<FunctionArguments>(functionCallArgumentsJson);
+// if (parsedResponse?.Choices?[0]?.Message?.FunctionCall?.ArgumentsJson != null)
+// {
+//     var arguments = JsonSerializer.Deserialize<Arguments>(parsedResponse.Choices[0].Message.FunctionCall.ArgumentsJson);
+    
+//     if (arguments?.Categories != null)
+//     {
+//         return arguments.Categories;
+//     }
+// }
 
-    return arguments?.Categories ?? new List<BudgetCategory>();
+// Console.WriteLine("No function call arguments returned from OpenAI.");
+// return new List<BudgetCategory>();
+// Log the raw function call arguments
+// Console.WriteLine($"Raw Function Call Arguments: {functionCallArgumentsJson}");
+
+// // Deserialize the function call arguments
+// try
+// {
+//     var arguments = JsonSerializer.Deserialize<FunctionArguments>(functionCallArgumentsJson);
+//     return arguments?.Categories ?? new List<BudgetCategory>();
+// }
+// catch (Exception ex)
+// {
+//     Console.WriteLine($"Error deserializing function call arguments: {ex.Message}");
+//     return new List<BudgetCategory>();
+// }
 }
 }
 
@@ -118,28 +138,25 @@ public class BudgetCategory
 public class OpenAiResponse
 {
     public List<Choice>? Choices { get; set; } // Nullable to prevent deserialization errors
-    public OpenAiError? Error { get; set; }    // Add this to capture errors
-}
-
-public class OpenAiError
-{
-    public string Message { get; set; } = string.Empty;
-    public string Type { get; set; } = string.Empty;
 }
 
 public class Choice
 {
-    public required Message Message { get; set; }
+    public Message? Message { get; set; }
 }
 
 public class Message
 {
-    public required FunctionCall FunctionCall { get; set; }
+    [JsonPropertyName("function_call")]
+    public FunctionCall? FunctionCall { get; set; }
 }
 
 public class FunctionCall
 {
-    public required string Arguments { get; set; }
+    public string? Name { get; set; }
+
+    [JsonPropertyName("arguments")]
+    public string? ArgumentsJson { get; set; }
 }
 
 public class Arguments
@@ -148,5 +165,6 @@ public class Arguments
 }
 public class FunctionArguments
 {
-    public required List<BudgetCategory> Categories { get; set; }
+    [JsonPropertyName("categories")]
+    public List<BudgetCategory> Categories { get; set; } = new();
 }
