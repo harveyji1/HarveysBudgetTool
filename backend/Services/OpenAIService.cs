@@ -50,36 +50,36 @@ public async Task<string> GetStructuredBudget(string prompt)
             new { role = "system", content = "You are a budgeting assistant that returns structured budget recommendations." },
             new { role = "user", content = prompt }
         },
-//   functions = new[]
-//     {
-//         new
-//         {
-//             name = "generate_budget",
-//             description = "Generate a budget with exact category amounts",
-//             parameters = new
-//             {
-//                 type = "object",
-//                 properties = new
-//                 {
-//                     categories = new
-//                     {
-//                         type = "array",
-//                         items = new
-//                         {
-//                             type = "object",
-//                             properties = new
-//                             {
-//                                 name = new { type = "string" },
-//                                 amount = new { type = "number" }
-//                             }
-//                         }
-//                     }
-//                 }
-//             }
-//         }
-//     },
-//     function_call = "auto"
-    };
+        functions = new[]
+            {
+                new
+                {
+                    name = "generate_budget",
+                    description = "Generate a budget with exact category amounts",
+                    parameters = new
+                    {
+                        type = "object",
+                        properties = new
+                        {
+                            categories = new
+                            {
+                                type = "array",
+                                items = new
+                                {
+                                    type = "object",
+                                    properties = new
+                                    {
+                                        name = new { type = "string" },
+                                        amount = new { type = "number" }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            function_call = "auto"
+        };
 
     var requestJson = JsonSerializer.Serialize(requestBody);
     var requestContent = new StringContent(requestJson, Encoding.UTF8, "application/json");
@@ -93,7 +93,18 @@ public async Task<string> GetStructuredBudget(string prompt)
     response.EnsureSuccessStatusCode();
     using var doc = JsonDocument.Parse(responseJson);
 
-    return doc.RootElement.GetProperty("choices")[0].GetProperty("message").GetProperty("content").GetString() ?? string.Empty;
+    var choices = doc.RootElement.GetProperty("choices");
+    var firstChoice = choices[0].GetProperty("message");
+
+    // Check if function_call exists
+    if (firstChoice.TryGetProperty("function_call", out var functionCall))
+    {
+        var argumentsJson = functionCall.GetProperty("arguments").GetString() ?? string.Empty;
+        return argumentsJson; // Return the structured JSON as a string
+    }
+
+    // Otherwise, fallback to regular content response
+    return firstChoice.GetProperty("content").GetString() ?? string.Empty;
 
 //     var parsedResponse = JsonSerializer.Deserialize<OpenAiResponse>(responseJson);
 
