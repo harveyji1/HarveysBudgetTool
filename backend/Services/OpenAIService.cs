@@ -1,6 +1,7 @@
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Authentication;
 
 public class OpenAIService
 {
@@ -40,7 +41,7 @@ public class OpenAIService
         return doc.RootElement.GetProperty("choices")[0].GetProperty("message").GetProperty("content").GetString() ?? string.Empty;
     }
 
-public async Task<string> GetStructuredBudget(string prompt)
+public async Task<List<Category>> GetStructuredBudget(string prompt)
 {
     var requestBody = new
     {
@@ -95,16 +96,30 @@ public async Task<string> GetStructuredBudget(string prompt)
 
     var choices = doc.RootElement.GetProperty("choices");
     var firstChoice = choices[0].GetProperty("message");
+    var functionCall = firstChoice.GetProperty("function_call");
+    Console.WriteLine("function call" + functionCall.GetRawText());
 
     // Check if function_call exists
-    if (firstChoice.TryGetProperty("function_call", out var functionCall))
+    if (functionCall.GetRawText() != null)
     {
+        Console.WriteLine("made it in");
         var argumentsJson = functionCall.GetProperty("arguments").GetString() ?? string.Empty;
-        return argumentsJson; // Return the structured JSON as a string
+        Console.WriteLine("The arguments: " + argumentsJson);
+        try
+        {
+            var budgetResponse = JsonSerializer.Deserialize<BudgetResponse>(argumentsJson);
+            Console.WriteLine("The budget response:" + budgetResponse);
+            return budgetResponse?.Categories ?? new List<Category>();
+        }
+        catch (JsonException ex)
+        {
+            Console.WriteLine("JSON Deserialization Error: " + ex.Message);
+            return new List<Category>(); // Return empty list on failure
+        }
     }
 
     // Otherwise, fallback to regular content response
-    return firstChoice.GetProperty("content").GetString() ?? string.Empty;
+     return new List<Category>();
 
 //     var parsedResponse = JsonSerializer.Deserialize<OpenAiResponse>(responseJson);
 
@@ -140,42 +155,13 @@ public async Task<string> GetStructuredBudget(string prompt)
 }
 
 // Supporting classes for structured response
-public class BudgetCategory
+public class Category
 {
-    public required string Name { get; set; }
-    public decimal Amount { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public double Amount { get; set; }
 }
 
-public class OpenAiResponse
+public class BudgetResponse
 {
-    public List<Choice>? Choices { get; set; } // Nullable to prevent deserialization errors
-}
-
-public class Choice
-{
-    public Message? Message { get; set; }
-}
-
-public class Message
-{
-    [JsonPropertyName("function_call")]
-    public FunctionCall? FunctionCall { get; set; }
-}
-
-public class FunctionCall
-{
-    public string? Name { get; set; }
-
-    [JsonPropertyName("arguments")]
-    public string? ArgumentsJson { get; set; }
-}
-
-public class Arguments
-{
-    public required List<BudgetCategory> Categories { get; set; }
-}
-public class FunctionArguments
-{
-    [JsonPropertyName("categories")]
-    public List<BudgetCategory> Categories { get; set; } = new();
+    public List<Category> Categories { get; set; } = new();
 }
