@@ -105,16 +105,15 @@ public async Task<List<Category>> GetStructuredBudget(string prompt)
         Console.WriteLine("made it in");
         var argumentsJson = functionCall.GetProperty("arguments").GetString() ?? string.Empty;
         Console.WriteLine("The arguments: " + argumentsJson);
-        try
+        var jsonDoc = JsonDocument.Parse(argumentsJson);
+        if (jsonDoc.RootElement.TryGetProperty("categories", out var categoriesElement))
         {
-            var budgetResponse = JsonSerializer.Deserialize<BudgetResponse>(argumentsJson);
-            Console.WriteLine("The budget response:" + budgetResponse);
-            return budgetResponse?.Categories ?? new List<Category>();
+            var categories = JsonSerializer.Deserialize<List<Category>>(categoriesElement.GetRawText());
+            Console.WriteLine("Extracted Categories: " + JsonSerializer.Serialize(categories));
+            return categories ?? new List<Category>();
         }
-        catch (JsonException ex)
-        {
-            Console.WriteLine("JSON Deserialization Error: " + ex.Message);
-            return new List<Category>(); // Return empty list on failure
+        else{
+            return new List<Category>();
         }
     }
 
