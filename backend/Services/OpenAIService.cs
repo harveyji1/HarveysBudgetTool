@@ -1,5 +1,7 @@
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Authentication;
 
 public class OpenAIService
 {
@@ -39,7 +41,7 @@ public class OpenAIService
         return doc.RootElement.GetProperty("choices")[0].GetProperty("message").GetProperty("content").GetString() ?? string.Empty;
     }
 
-public async Task<List<BudgetCategory>> GetStructuredBudget(string prompt)
+public async Task<List<Category>> GetStructuredBudget(string prompt)
 {
     var requestBody = new
     {
@@ -50,31 +52,35 @@ public async Task<List<BudgetCategory>> GetStructuredBudget(string prompt)
             new { role = "user", content = prompt }
         },
         functions = new[]
-        {
-            new {
-                name = "generate_budget",
-                description = "Generate a budget with exact category amounts",
-                parameters = new {
-                    type = "object",
-                    properties = new {
-                        categories = new {
-                            type = "array",
-                            items = new {
-                                type = "object",
-                                properties = new {
-                                    name = new { type = "string" },
-                                    amount = new { type = "number" }
-                                },
-                                required = new[] { "name", "amount" }
+            {
+                new
+                {
+                    name = "generate_budget",
+                    description = "Generate a budget with exact category amounts",
+                    parameters = new
+                    {
+                        type = "object",
+                        properties = new
+                        {
+                            categories = new
+                            {
+                                type = "array",
+                                items = new
+                                {
+                                    type = "object",
+                                    properties = new
+                                    {
+                                        name = new { type = "string" },
+                                        amount = new { type = "number" }
+                                    }
+                                }
                             }
                         }
-                    },
-                    required = new[] { "categories" }
+                    }
                 }
-            }
-        },
-        function_call = "auto"
-    };
+            },
+            function_call = "auto"
+        };
 
     var requestJson = JsonSerializer.Serialize(requestBody);
     var requestContent = new StringContent(requestJson, Encoding.UTF8, "application/json");
@@ -86,67 +92,78 @@ public async Task<List<BudgetCategory>> GetStructuredBudget(string prompt)
     Console.WriteLine("OpenAI Response: " + responseJson); // Debugging output
 
     response.EnsureSuccessStatusCode();
+    using var doc = JsonDocument.Parse(responseJson);
 
-    var parsedResponse = JsonSerializer.Deserialize<OpenAiResponse>(responseJson);
+    var choices = doc.RootElement.GetProperty("choices");
+    var firstChoice = choices[0].GetProperty("message");
+    var functionCall = firstChoice.GetProperty("function_call");
+    Console.WriteLine("function call" + functionCall.GetRawText());
 
-    // Handle OpenAI errors
-    if (parsedResponse?.Error != null)
+    // Check if function_call exists
+    if (functionCall.GetRawText() != null)
     {
-        throw new Exception($"OpenAI API Error: {parsedResponse.Error.Message}");
+        Console.WriteLine("made it in");
+        var argumentsJson = functionCall.GetProperty("arguments").GetString() ?? string.Empty;
+        Console.WriteLine("The arguments: " + argumentsJson);
+        var jsonDoc = JsonDocument.Parse(argumentsJson);
+        if (jsonDoc.RootElement.TryGetProperty("categories", out var categoriesElement))
+        {
+            var categories = JsonSerializer.Deserialize<List<Category>>(categoriesElement.GetRawText());
+            Console.WriteLine("Extracted Categories: " + JsonSerializer.Serialize(categories));
+            return categories ?? new List<Category>();
+        }
+        else{
+            return new List<Category>();
+        }
     }
 
-    var functionCallArgumentsJson = parsedResponse?.Choices?.FirstOrDefault()?.Message?.FunctionCall?.Arguments;
+    // Otherwise, fallback to regular content response
+     return new List<Category>();
 
-    if (string.IsNullOrEmpty(functionCallArgumentsJson))
-    {
-        Console.WriteLine("No function call arguments returned from OpenAI.");
-        return new List<BudgetCategory>();
-    }
-    var arguments = JsonSerializer.Deserialize<FunctionArguments>(functionCallArgumentsJson);
+//     var parsedResponse = JsonSerializer.Deserialize<OpenAiResponse>(responseJson);
 
-    return arguments?.Categories ?? new List<BudgetCategory>();
+//     Console.WriteLine("Parsed Response: " + JsonSerializer.Serialize(parsedResponse, new JsonSerializerOptions { WriteIndented = true }));
+
+// if (parsedResponse?.Choices?[0]?.Message?.FunctionCall?.ArgumentsJson != null)
+// {
+//     var arguments = JsonSerializer.Deserialize<Arguments>(parsedResponse.Choices[0].Message.FunctionCall.ArgumentsJson);
+    
+//     if (arguments?.Categories != null)
+//     {
+//         return arguments.Categories;
+//     }
+// }
+
+// Console.WriteLine("No function call arguments returned from OpenAI.");
+// return new List<BudgetCategory>();
+// Log the raw function call arguments
+// Console.WriteLine($"Raw Function Call Arguments: {functionCallArgumentsJson}");
+
+// // Deserialize the function call arguments
+// try
+// {
+//     var arguments = JsonSerializer.Deserialize<FunctionArguments>(functionCallArgumentsJson);
+//     return arguments?.Categories ?? new List<BudgetCategory>();
+// }
+// catch (Exception ex)
+// {
+//     Console.WriteLine($"Error deserializing function call arguments: {ex.Message}");
+//     return new List<BudgetCategory>();
+// }
 }
 }
 
 // Supporting classes for structured response
-public class BudgetCategory
+public class Category
 {
+    [JsonPropertyName("name")]
     public required string Name { get; set; }
+
+    [JsonPropertyName("amount")]
     public decimal Amount { get; set; }
 }
 
-public class OpenAiResponse
+public class BudgetResponse
 {
-    public List<Choice>? Choices { get; set; } // Nullable to prevent deserialization errors
-    public OpenAiError? Error { get; set; }    // Add this to capture errors
-}
-
-public class OpenAiError
-{
-    public string Message { get; set; } = string.Empty;
-    public string Type { get; set; } = string.Empty;
-}
-
-public class Choice
-{
-    public required Message Message { get; set; }
-}
-
-public class Message
-{
-    public required FunctionCall FunctionCall { get; set; }
-}
-
-public class FunctionCall
-{
-    public required string Arguments { get; set; }
-}
-
-public class Arguments
-{
-    public required List<BudgetCategory> Categories { get; set; }
-}
-public class FunctionArguments
-{
-    public required List<BudgetCategory> Categories { get; set; }
+    public List<Category> Categories { get; set; } = new();
 }

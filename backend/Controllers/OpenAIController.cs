@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 [Route("api/openai")]
@@ -28,6 +29,7 @@ public class OpenAIController : ControllerBase
     public async Task<IActionResult> GetStructuredBudget([FromBody] ChatRequest request)
     {
         var suggestedBudget = await _openAIService.GetStructuredBudget(request.Prompt);
+        // Console.WriteLine($"Suggested Budget: {JsonSerializer.Serialize(suggestedBudget)}"); // Log output
         return Ok(new {suggestedBudget});
     }
 }
