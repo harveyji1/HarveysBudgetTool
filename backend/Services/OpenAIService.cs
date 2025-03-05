@@ -156,8 +156,11 @@ public async Task<List<Category>> GetStructuredBudget(string prompt)
 // Supporting classes for structured response
 public class Category
 {
-    public string Name { get; set; } = string.Empty;
-    public double Amount { get; set; }
+    [JsonPropertyName("name")]
+    public required string Name { get; set; }
+
+    [JsonPropertyName("amount")]
+    public decimal Amount { get; set; }
 }
 
 public class BudgetResponse
