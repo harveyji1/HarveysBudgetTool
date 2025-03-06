@@ -97,59 +97,20 @@ public async Task<List<Category>> GetStructuredBudget(string prompt)
     var choices = doc.RootElement.GetProperty("choices");
     var firstChoice = choices[0].GetProperty("message");
     var functionCall = firstChoice.GetProperty("function_call");
-    Console.WriteLine("function call" + functionCall.GetRawText());
 
-    // Check if function_call exists
-    if (functionCall.GetRawText() != null)
+    var argumentsJson = functionCall.GetProperty("arguments").GetString() ?? string.Empty;
+    // Console.WriteLine("The arguments: " + argumentsJson);
+    var jsonDoc = JsonDocument.Parse(argumentsJson);
+    if (jsonDoc.RootElement.TryGetProperty("categories", out var categoriesElement))
     {
-        Console.WriteLine("made it in");
-        var argumentsJson = functionCall.GetProperty("arguments").GetString() ?? string.Empty;
-        Console.WriteLine("The arguments: " + argumentsJson);
-        var jsonDoc = JsonDocument.Parse(argumentsJson);
-        if (jsonDoc.RootElement.TryGetProperty("categories", out var categoriesElement))
-        {
-            var categories = JsonSerializer.Deserialize<List<Category>>(categoriesElement.GetRawText());
-            Console.WriteLine("Extracted Categories: " + JsonSerializer.Serialize(categories));
-            return categories ?? new List<Category>();
-        }
-        else{
-            return new List<Category>();
-        }
+        var categories = JsonSerializer.Deserialize<List<Category>>(categoriesElement.GetRawText());
+        // Console.WriteLine("Extracted Categories: " + JsonSerializer.Serialize(categories));
+        return categories ?? new List<Category>();
+    }
+    else{
+        return new List<Category>();
     }
 
-    // Otherwise, fallback to regular content response
-     return new List<Category>();
-
-//     var parsedResponse = JsonSerializer.Deserialize<OpenAiResponse>(responseJson);
-
-//     Console.WriteLine("Parsed Response: " + JsonSerializer.Serialize(parsedResponse, new JsonSerializerOptions { WriteIndented = true }));
-
-// if (parsedResponse?.Choices?[0]?.Message?.FunctionCall?.ArgumentsJson != null)
-// {
-//     var arguments = JsonSerializer.Deserialize<Arguments>(parsedResponse.Choices[0].Message.FunctionCall.ArgumentsJson);
-    
-//     if (arguments?.Categories != null)
-//     {
-//         return arguments.Categories;
-//     }
-// }
-
-// Console.WriteLine("No function call arguments returned from OpenAI.");
-// return new List<BudgetCategory>();
-// Log the raw function call arguments
-// Console.WriteLine($"Raw Function Call Arguments: {functionCallArgumentsJson}");
-
-// // Deserialize the function call arguments
-// try
-// {
-//     var arguments = JsonSerializer.Deserialize<FunctionArguments>(functionCallArgumentsJson);
-//     return arguments?.Categories ?? new List<BudgetCategory>();
-// }
-// catch (Exception ex)
-// {
-//     Console.WriteLine($"Error deserializing function call arguments: {ex.Message}");
-//     return new List<BudgetCategory>();
-// }
 }
 }
 
