@@ -1,36 +1,27 @@
-import { useState } from "react";
+import React from "react";
 import { ReturnedCategory } from "./../../models/Category";
-import { getStructuredBudget } from "../../api/openai";
 
-const StructuredBudget = (prompt: string) => {
-    const [budgetCategories, setBudgetCategories] = useState<ReturnedCategory[]>([]);
-  
-    const fetchBudget = async () => {
-      try {
-        const response = await getStructuredBudget(prompt);
-        console.log("API Response:", response);
-  
-        // Ensure the API response is correctly structured
-        setBudgetCategories(response);
-      } catch (error) {
-        console.error("Error fetching budget:", error);
-      }
-    };
-  
+interface StructuredBudgetProps {
+    categories?: ReturnedCategory[]; // Optional to handle cases where it's undefined initially
+}
+
+const StructuredBudget: React.FC<StructuredBudgetProps> = ({ categories = [] }) => {
     return (
-      <div>
-        <h2>Generated Budget</h2>
-        <button onClick={fetchBudget}>Generate Budget</button>
-  
-        <ul>
-          {budgetCategories.map((category, index) => (
-            <li key={index}>
-              <strong>{category.name}:</strong> ${category.amount.toFixed(2)}
-            </li>
-          ))}
-        </ul>
-      </div>
+        <div>
+            <h2 className='aiSubHeader' >Generated Budget</h2>
+            <ul>
+                {categories.length > 0 ? (
+                    categories.map((category, index) => (
+                        <li key={index}>
+                            <strong>{category.name}:</strong> ${category.amount.toFixed(2)}
+                        </li>
+                    ))
+                ) : (
+                    <p className="suggestedText">No budget categories available.</p>
+                )} 
+            </ul>
+        </div>
     );
-  };
-  
-  export default StructuredBudget;
+};
+
+export default StructuredBudget;

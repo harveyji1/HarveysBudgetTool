@@ -18,9 +18,11 @@ export const getSuggestedBudget = async (prompt: string) => {
 export const getStructuredBudget = async (prompt: string) => {
     try {
         const response = await axios.post(`${API_BASE_URL}/structured-budget`, { prompt });
-        return response.data.response;
+        console.log("Full API Response:", response.data); // Debugging
+
+        return response.data.suggestedBudget; // Extract `suggestedBudget` properly
     } catch (error) {
         console.error("Error fetching AI response:", error);
-        return "Error connecting to AI service. Please try again later.";
+        return []; // Return an empty array instead of a string to prevent crashes
     }
 };
