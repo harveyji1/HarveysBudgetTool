@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Contact from './components/Contact/Contact';
 import { callSuggestedBudget } from './utilities/callOpenai';
 import { useState } from 'react';
+// import StructuredBudget from './components/AISuggestions/StructuredBudget';
 
 
 function App() {
