@@ -1,5 +1,6 @@
 import React from "react";
 import { ReturnedCategory } from "./../../models/Category";
+import './StructuredBudget.css';
 
 interface StructuredBudgetProps {
     categories?: ReturnedCategory[]; // Optional to handle cases where it's undefined initially
@@ -7,9 +8,9 @@ interface StructuredBudgetProps {
 
 const StructuredBudget: React.FC<StructuredBudgetProps> = ({ categories = [] }) => {
     return (
-        <div>
-            <h2 className='aiSubHeader' >Generated Budget</h2>
-            <ul>
+        <div className="structuredBudget">
+            <h5 className='structuredBudgetHeader' >Generated Budget</h5>
+            <ul className="structuredBudgetContainer">
                 {categories.length > 0 ? (
                     categories.map((category, index) => (
                         <li key={index}>
@@ -17,7 +18,7 @@ const StructuredBudget: React.FC<StructuredBudgetProps> = ({ categories = [] }) 
                         </li>
                     ))
                 ) : (
-                    <p className="suggestedText">No budget categories available.</p>
+                    <p className="structuredText">No budget categories available.</p>
                 )} 
             </ul>
         </div>
