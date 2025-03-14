@@ -1,0 +1,23 @@
+.structuredBudget{
+    align-items: center;
+}
+.structuredBudgetHeader{
+    color: var(--bright-color) !important;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+}
+
+.structuredBudgetContainer{
+    display: grid;
+    justify-content: center; /* Centers horizontally */
+    align-items: center; /* Centers vertically */
+    /* min-height: 100px;  */
+    padding-inline-start: 0 !important;
+    color: var(--bright-color) !important;
+}
+
+.structuredText{
+    color: var(--bright-color) !important;
+    text-align: center;
+    width: 100%;
+}
