@@ -18,7 +18,7 @@ const StructuredBudget: React.FC<StructuredBudgetProps> = ({ categories = [] }) 
                         </li>
                     ))
                 ) : (
-                    <p className="structuredText">No budget categories available.</p>
+                    <p className="structuredText">Generated Budget will appear here</p>
                 )} 
             </ul>
         </div>

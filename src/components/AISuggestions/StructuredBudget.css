@@ -11,10 +11,9 @@
     display: grid;
     justify-content: center; /* Centers horizontally */
     align-items: center; /* Centers vertically */
-    min-height: 100px; 
+    /* min-height: 100px;  */
     padding-inline-start: 0 !important;
     color: var(--bright-color) !important;
-
 }
 
 .structuredText{
