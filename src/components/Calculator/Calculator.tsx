@@ -121,8 +121,14 @@ const Calculator: React.FC<CalculatorProps> = ({ onAskAI }) =>{
                   </Form.Label>
                   <Form.Control
                     type='number'
+                    min='0'
                     value={field.value}
                     onChange={(e) => handleFieldChange(categoryIndex, fieldIndex, e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "-") {
+                        e.preventDefault();
+                      }
+                    }}
                   />
                 </div>
               ))}

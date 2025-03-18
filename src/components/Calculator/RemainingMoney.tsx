@@ -15,6 +15,7 @@ const RemainingMoney: React.FC<RemainingMoneyProps> = ({ remainingMoney }) => {
       </Form.Label>
         <Form.Control
           type='number'
+          min='0'
           value={remainingMoney}
           readOnly
         />
