@@ -1,4 +1,5 @@
 import { getSuggestedBudget, getStructuredBudget } from "../api/openai";
+import { CategoryField } from "../models/Category";
 
 
 export const callSuggestedBudget = async (budget: string) => {
@@ -18,5 +19,11 @@ export const callStructuredBudget = async(budget: string, previousSuggestion: st
 
     console.log("Structured Budget Response:", aiResponse);
 
-    return aiResponse;
+    const structuredBudget: CategoryField[] = aiResponse.map((category: { name: string; amount: number; }) => ({
+        id: category.name,
+        label: category.name,
+        value: category.amount.toFixed(2)
+    }));
+
+    return structuredBudget;
 }

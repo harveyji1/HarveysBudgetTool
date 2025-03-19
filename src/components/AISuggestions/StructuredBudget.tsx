@@ -1,9 +1,9 @@
 import React from "react";
-import { ReturnedCategory } from "./../../models/Category";
+import { CategoryField } from "./../../models/Category";
 import './StructuredBudget.css';
 
 interface StructuredBudgetProps {
-    categories?: ReturnedCategory[]; // Optional to handle cases where it's undefined initially
+    categories?: CategoryField[]; // Optional to handle cases where it's undefined initially
 }
 
 const StructuredBudget: React.FC<StructuredBudgetProps> = ({ categories = [] }) => {
@@ -14,7 +14,7 @@ const StructuredBudget: React.FC<StructuredBudgetProps> = ({ categories = [] }) 
                 {categories.length > 0 ? (
                     categories.map((category, index) => (
                         <li key={index}>
-                            <strong>{category.name}:</strong> ${category.amount.toFixed(2)}
+                            <strong>{category.label}:</strong> ${category.value}
                         </li>
                     ))
                 ) : (

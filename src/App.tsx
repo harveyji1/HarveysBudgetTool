@@ -9,13 +9,13 @@ import { callSuggestedBudget } from './utilities/callOpenai';
 import { callStructuredBudget } from './utilities/callOpenai';
 import { useState } from 'react';
 import StructuredBudget from './components/AISuggestions/StructuredBudget';
-import { ReturnedCategory } from './models/Category';
+import { CategoryField } from './models/Category';
 
 
 function App() {
 
   const [aiResponse, setAiResponse] = useState<string | null>('');
-  const [structuredBudget, setStructuredBudget] = useState<ReturnedCategory[]>([]);
+  const [structuredBudget, setStructuredBudget] = useState<CategoryField[]>([]);
 
   // Function to handle asking AI and setting the response
   const handleAskAIButtonClick = async (formattedData: string) => {
